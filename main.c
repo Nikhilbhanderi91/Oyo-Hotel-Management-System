@@ -1,355 +1,258 @@
-#include<stdio.h>
-#include<conio.h>
-#include<ctype.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
-void add();  //FUNCTIONS
+// Function declarations
+void add();
 void list();
-void edit();  //GLOBALLY DECLARED FUNCTIONS N VARIABLE
+void edit();
 void delete1();
 void search();
+void login();
 
+struct CustomerDetails {
+    char roomnumber[10];
+    char name[20];
+    char address[25];
+    char phonenumber[15];
+    char nationality[15];
+    char email[20];
+    char period[10];
+    char arrivaldate[10];
+} s;
 
-void login()
-{
+void login() {
+    int attempts = 0;
+    char uname[10], pword[10];
+    const char user[] = "user";
+    const char pass[] = "pass";
 
-	int a=0,i=0;
-    char uname[10],c=' ';
-    char pword[10],code[10];
-    char user[10]="user";
-    char pass[10]="pass";
-    do
-{
-	system("cls");
+    while (attempts < 3) {
+        printf("\n************************** LOGIN FORM **************************\n");
+        printf("Enter Username: ");
+        scanf("%9s", uname);
+        printf("Enter Password: ");
+        scanf("%9s", pword);
 
-    printf("\n  **************************  LOGIN FORM  **************************  ");
-    printf(" \n                       ENTER USERNAME:-");
-	scanf("%s", &uname);
-	printf(" \n                       ENTER PASSWORD:-");
-	while(i<10)
-	{
-	    pword[i]=getch();
-	    c=pword[i];
-	    if(c==13) break;
-	    else printf("*");
-	    i++;
-	}
-	pword[i]='\0';
-	//char code=pword;
-	i=0;
-	//scanf("%s",&pword);
-		if(strcmp(uname,user)==0 && strcmp(pword,pass)==0)
-	{
-	printf("  \n\n\n       WELCOME !!!! LOGIN IS SUCCESSFUL");
+        if (strcmp(uname, user) == 0 && strcmp(pword, pass) == 0) {
+            printf("\nWelcome! Login successful.\n");
+            return;
+        } else {
+            printf("\nSorry, login unsuccessful. Try again.\n");
+            attempts++;
+        }
+    }
 
-	break;
-	}
-	else
-	{
-		printf("\n        SORRY !!!!  LOGIN IS UNSUCESSFUL");
-		a++;
-
-		getch();
-
-	}
-}
-	while(a<=2);
-	if (a>2)
-	{
-		printf("\nSorry you have entered the wrong username and password for four times!!!");
-
-		getch();
-
-		}
-		system("cls");
+    if (attempts >= 3) {
+        printf("\nSorry, too many login attempts. Exiting.\n");
+        exit(1);
+    }
 }
 
-struct CustomerDetails   //STRUCTURE DECLARATION
-{
-	char roomnumber[10];
-	char name[20];
-	char address[25];
-	char phonenumber[15];
-	char nationality[15];
-	char email[20];
-	char period[10];
-	char arrivaldate[10];
-}s;
+int main() {
+    char choice;
 
-int main(){     // MAIN FUNCTION
-	int i=0;
-
-
-	char customername;
-	char choice;
     login();
-    system("cls");
-	while (1)      // INFINITE LOOP
-	{
-		system("cls");
-		 for(i=0;i<80;i++)
-		printf("-");
-		printf("\n");
-		printf("   ******************************  |MAIN MENU|  ***************************** \n");
-		for(i=0;i<80;i++)
-		printf("-");
-		printf("\n");
-		setcolor(10);
-		printf("\t\t *Please enter your choice for menu*:");
-		printf("\n\n");
-		printf(" \n Enter 1 -> Book a room");
-		printf("\n------------------------");
-		printf(" \n Enter 2 -> View Customer Record");
-		printf("\n----------------------------------");
-		printf(" \n Enter 3 -> Delete Customer Record");
-		printf("\n-----------------------------------");
-		printf(" \n Enter 4 -> Search Customer Record");
-		printf("\n-----------------------------------");
-		printf(" \n Enter 5 -> Edit Record");
-		printf("\n-----------------------");
-		printf(" \n Enter 6 -> Exit");
-		printf("\n-----------------");
-		printf("\n");
-		for(i=0;i<80;i++)
-		printf("-");
-	    for(i=0;i<80;i++)
-		printf("-");
+    while (1) {
+        printf("\n************************** MAIN MENU **************************\n");
+        printf("1 -> Book a room\n");
+        printf("2 -> View Customer Record\n");
+        printf("3 -> Delete Customer Record\n");
+        printf("4 -> Search Customer Record\n");
+        printf("5 -> Edit Record\n");
+        printf("6 -> Exit\n");
+        printf("Enter your choice: ");
+        choice = getchar();
+        getchar();  // To consume the newline character
 
-		choice=getche();
-		choice=toupper(choice);
-		switch(choice)           // SWITCH STATEMENT
-		{
-			case '1':
-				add();break;
-			case '2':
-				list();break;
-			case '3':
-				delete1();break;
-			case '4':
-				search();break;
-			case '5':
-				edit();break;
-			case '6':
-				system("cls");
-				printf("\n\n\t *****THANK YOU*****");
-				printf("\n\t FOR TRUSTING OUR SERVICE");
-			//	Sleep(2000);
-				exit(0);
-				break;
-			default:
-				system("cls");
-				printf("Incorrect Input");
-				printf("\n Press any key to continue");
-				getch();
-		}
-	}
+        switch (choice) {
+            case '1':
+                add();
+                break;
+            case '2':
+                list();
+                break;
+            case '3':
+                delete1();
+                break;
+            case '4':
+                search();
+                break;
+            case '5':
+                edit();
+                break;
+            case '6':
+                printf("\nThank you for using our service.\n");
+                exit(0);
+                break;
+            default:
+                printf("\nIncorrect Input. Please try again.\n");
+                break;
+        }
+    }
 }
 
-void add()
-{
-	FILE *f;
-	char test;
-	f=fopen("add.txt","a+");
-	if(f==0)
-	{   f=fopen("add.txt","w+");
-		system("cls");
-		printf("Please hold on while we set our database in your computer!!");
-		printf("\n Process completed press any key to continue!! ");
-		getch();
-	}
-	while(1)
-	{
-		system("cls");
-		printf("\n Enter Customer Details:");
-		printf("\n**************************");
-		printf("\n Enter Room number:\n");
-		scanf("\n%s",s.roomnumber);
-		fflush(stdin);
-		printf("Enter Name:\n");
-		scanf("%s",s.name);
-		printf("Enter Address:\n");
-		scanf("%s",s.address);
-		printf("Enter Phone Number:\n");
-		scanf("%s",s.phonenumber);
-		printf("Enter Nationality:\n");
-		scanf("%s",s.nationality);
-		printf("Enter Email:\n");
-		scanf(" %s",s.email);
-		printf("Enter Period(\'x\'days):\n");
-		scanf("%s",&s.period);
-		printf("Enter Arrival date(dd\\mm\\yyyy):\n");
-		scanf("%s",&s.arrivaldate);
-		fwrite(&s,sizeof(s),1,f);
-		fflush(stdin);
-		printf("\n\n1 Room is successfully booked!!");
-		printf("\n Press esc key to exit,  any other key to add another customer detail:");
-		test=getche();
-		if(test==27)
-			break;
+void add() {
+    FILE *f = fopen("add.txt", "a+");
+    if (f == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
 
-	}
-	fclose(f);
+    while (1) {
+        printf("\nEnter Customer Details:\n");
+        printf("Enter Room number: ");
+        scanf("%9s", s.roomnumber);
+        printf("Enter Name: ");
+        scanf("%19s", s.name);
+        printf("Enter Address: ");
+        scanf("%24s", s.address);
+        printf("Enter Phone Number: ");
+        scanf("%14s", s.phonenumber);
+        printf("Enter Nationality: ");
+        scanf("%14s", s.nationality);
+        printf("Enter Email: ");
+        scanf("%19s", s.email);
+        printf("Enter Period (days): ");
+        scanf("%9s", s.period);
+        printf("Enter Arrival date (dd/mm/yyyy): ");
+        scanf("%9s", s.arrivaldate);
+
+        fwrite(&s, sizeof(s), 1, f);
+        printf("\n1 Room is successfully booked!\n");
+
+        printf("\nPress 'q' to quit or any other key to add another customer: ");
+        char choice = getchar();
+        getchar();  // To consume the newline
+        if (tolower(choice) == 'q') break;
+    }
+
+    fclose(f);
 }
 
-void list()
-{
-	FILE *f;
-	int i;
-	if((f=fopen("add.txt","r"))==NULL)
-		exit(0);
-	system("cls");
-	printf("ROOM    ");
-	printf("NAME\t ");
-	printf("\tADDRESS ");
-	printf("\tPHONENUMBER ");
-	printf("\tNATIONALITY ");
-	printf("\tEMAIL ");
-	printf("\t\t  PERIOD ");
-	printf("\t ARRIVALDATE \n");
+void list() {
+    FILE *f = fopen("add.txt", "r");
+    if (f == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
 
-	for(i=0;i<118;i++)
-		printf("-");
-	while(fread(&s,sizeof(s),1,f)==1)
-	{
-		/*printf("ROOMNUMBER :\t%s\n",s.roomnumber);
-		printf("NAME:\t%s\n",,s.name);
-		printf("ADDRESS:\t%s\n",s.address);
-		printf("PHONENUMBER:\t%s\n",s.phonenumber);
-		printf("NATIONALITY \n");*/
-		printf("\n%s \t%s \t\t%s \t\t%s \t%s  \t%s  \t     %s  \t  %s",s.roomnumber, s.name , s.address , s.phonenumber ,s.nationality ,s.email,s.period,  s.arrivaldate);
-	}
-	printf("\n");
-	for(i=0;i<118;i++)
-		printf("-");
+    printf("\n%-10s%-20s%-25s%-15s%-15s%-20s%-10s%-12s\n", "Room No.", "Name", "Address", "Phone", "Nationality", "Email", "Period", "Arrival Date");
+    for (int i = 0; i < 118; i++) printf("-");
 
-	fclose(f);
-	getch();
+    while (fread(&s, sizeof(s), 1, f) == 1) {
+        printf("\n%-10s%-20s%-25s%-15s%-15s%-20s%-10s%-12s", s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
+    }
+
+    printf("\n");
+    fclose(f);
 }
 
-void delete1()
-{
-	FILE *f,*t;
-	int i=1;
-	char roomnumber[20];
-	if((t=fopen("temp.txt","w"))==NULL)
-	exit(0);
-	if((f=fopen("add.txt","r"))==NULL)
-	exit(0);
-	system("cls");
-	printf("Enter the Room Number of the hotel to be deleted from the database: \n");
-	fflush(stdin);
-	scanf("%s",roomnumber);
-	while(fread(&s,sizeof(s),1,f)==1)
-	{
-		if(strcmp(s.roomnumber,roomnumber)==0)
-		{       i=0;
-			continue;
-		}
-		else
-			fwrite(&s,sizeof(s),1,t);
-	}
-	if(i==1)
-	{
-		printf("\n\n Records of Customer in this  Room number is not found!!");
-		//remove("E:/file.txt");
-	   //rename("E:/temp.txt","E:/file.txt");
-		getch();
-		fclose(f);
-		fclose(t);
-		main();
-	}
-	fclose(f);
-	fclose(t);
-	remove("add.txt");
-	rename("temp.txt","add.txt");
-	printf("\n\nThe Customer is successfully removed....");
-	fclose(f);
-	fclose(t);
-	getch();
+void delete1() {
+    FILE *f = fopen("add.txt", "r");
+    FILE *temp = fopen("temp.txt", "w");
+    if (f == NULL || temp == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    char roomnumber[10];
+    printf("Enter the Room Number to delete: ");
+    scanf("%9s", roomnumber);
+
+    int found = 0;
+    while (fread(&s, sizeof(s), 1, f) == 1) {
+        if (strcmp(s.roomnumber, roomnumber) != 0) {
+            fwrite(&s, sizeof(s), 1, temp);
+        } else {
+            found = 1;
+        }
+    }
+
+    fclose(f);
+    fclose(temp);
+    remove("add.txt");
+    rename("temp.txt", "add.txt");
+
+    if (found) {
+        printf("\nCustomer record deleted successfully.\n");
+    } else {
+        printf("\nRoom number not found.\n");
+    }
 }
 
-void search()
-{
-system("cls");
-	FILE *f;
-	char roomnumber[20];
-	int flag=1;
-	f=fopen("add.txt","r+");
-	if(f==0)
-		exit(0);
-	fflush(stdin);
-	printf("Enter Room number of the customer to search its details: \n");
-	scanf("%s", roomnumber);
-	while(fread(&s,sizeof(s),1,f)==1)
-	{
-		if(strcmp(s.roomnumber,roomnumber)==0){
-			flag=0;
-			printf("\n\tRecord Found\n ");
-			printf("\nRoom Number:\t%s",s.roomnumber);
-			printf("\nName:\t%s",s.name);
-			printf("\nAddress:\t%s",s.address);
-			printf("\nPhone number:\t%s",s.phonenumber);
-			printf("\nNationality:\t%s",s.nationality);
-			printf("\nEmail:\t%s",s.email);
-			printf("\nPeriod:\t%s",s.period);
-			printf("\nArrival date:\t%s",s.arrivaldate);
-			flag=0;
-			break;
-		}
-	}
-	if(flag==1){
-		printf("\n\tRequested Customer could not be found!");
-	}
-	getch();
-	fclose(f);
+void search() {
+    FILE *f = fopen("add.txt", "r");
+    if (f == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    char roomnumber[10];
+    printf("Enter the Room Number to search: ");
+    scanf("%9s", roomnumber);
+
+    int found = 0;
+    while (fread(&s, sizeof(s), 1, f) == 1) {
+        if (strcmp(s.roomnumber, roomnumber) == 0) {
+            found = 1;
+            printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n", 
+                    s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nCustomer record not found.\n");
+    }
+
+    fclose(f);
 }
 
-void edit()
-{
-	FILE *f;
-	int k=1;
-	char roomnumber[20];
-	long int size=sizeof(s);
-	if((f=fopen("add.txt","r+"))==NULL)
-		exit(0);
-	system("cls");
-	printf("Enter Room number of the customer to edit:\n\n");
-	scanf("%[^\n]",roomnumber);
-	fflush(stdin);
-	while(fread(&s,sizeof(s),1,f)==1)
-	{
-		if(strcmp(s.roomnumber,roomnumber)==0)
-		{
-			k=0;
-			printf("\nEnter Room Number     :");
-			gets(s.roomnumber);
-			printf("\nEnter Name    :");
-			fflush(stdin);
-			scanf("%s",&s.name);
-			printf("\nEnter Address        :");
-			scanf("%s",&s.address);
-			printf("\nEnter Phone number :");
-			scanf("%f",&s.phonenumber);
-			printf("\nEnter Nationality :");
-			scanf("%s",&s.nationality);
-			printf("\nEnter Email :");
-			scanf("%s",&s.email);
-			printf("\nEnter Period :");
-			scanf("%s",&s.period);
-			printf("\nEnter Arrival date :");
-			scanf("%s",&s.arrivaldate);
-			fseek(f,size,SEEK_CUR);  //to go to desired position infile
-			fwrite(&s,sizeof(s),1,f);
-			break;
-		}
-	}
-	if(k==1){
-		printf("\n\nTHE RECORD DOESN'T EXIST!!!!");
-		fclose(f);
-		getch();
-	}else{
-	fclose(f);
-	printf("\n\n\t\tYOUR RECORD IS SUCCESSFULLY EDITED!!!");
-	getch();
-}
+void edit() {
+    FILE *f = fopen("add.txt", "r+");
+    if (f == NULL) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    char roomnumber[10];
+    printf("Enter the Room Number to edit: ");
+    scanf("%9s", roomnumber);
+
+    int found = 0;
+    while (fread(&s, sizeof(s), 1, f) == 1) {
+        if (strcmp(s.roomnumber, roomnumber) == 0) {
+            found = 1;
+            printf("Enter new details for the customer:\n");
+            printf("Enter Room number: ");
+            scanf("%9s", s.roomnumber);
+            printf("Enter Name: ");
+            scanf("%19s", s.name);
+            printf("Enter Address: ");
+            scanf("%24s", s.address);
+            printf("Enter Phone Number: ");
+            scanf("%14s", s.phonenumber);
+            printf("Enter Nationality: ");
+            scanf("%14s", s.nationality);
+            printf("Enter Email: ");
+            scanf("%19s", s.email);
+            printf("Enter Period (days): ");
+            scanf("%9s", s.period);
+            printf("Enter Arrival date (dd/mm/yyyy): ");
+            scanf("%9s", s.arrivaldate);
+
+            fseek(f, -sizeof(s), SEEK_CUR);
+            fwrite(&s, sizeof(s), 1, f);
+            printf("\nCustomer record updated successfully.\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nRoom number not found.\n");
+    }
+
+    fclose(f);
 }
