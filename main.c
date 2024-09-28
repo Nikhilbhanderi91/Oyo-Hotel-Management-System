@@ -256,3 +256,4 @@ void edit() {
 
     fclose(f);
 }
+//all function create
