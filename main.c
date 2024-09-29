@@ -10,7 +10,10 @@ void edit();
 void delete1();
 void search();
 void login();
+void getCustomerDetails();
+void printCustomerDetails();
 
+// Customer structure definition
 struct CustomerDetails {
     char roomnumber[10];
     char name[20];
@@ -21,6 +24,11 @@ struct CustomerDetails {
     char period[10];
     char arrivaldate[10];
 } s;
+
+void clearBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
 
 void login() {
     int attempts = 0;
@@ -50,47 +58,41 @@ void login() {
     }
 }
 
-int main() {
-    char choice;
+void getCustomerDetails() {
+    printf("\nEnter Room number: ");
+    scanf("%9s", s.roomnumber);
+    clearBuffer();
+    
+    printf("Enter Name: ");
+    fgets(s.name, 20, stdin);
+    strtok(s.name, "\n"); // Remove newline
 
-    login();
-    while (1) {
-        printf("\n************************** MAIN MENU **************************\n");
-        printf("1 -> Book a room\n");
-        printf("2 -> View Customer Record\n");
-        printf("3 -> Delete Customer Record\n");
-        printf("4 -> Search Customer Record\n");
-        printf("5 -> Edit Record\n");
-        printf("6 -> Exit\n");
-        printf("Enter your choice: ");
-        choice = getchar();
-        getchar();  // To consume the newline character
+    printf("Enter Address: ");
+    fgets(s.address, 25, stdin);
+    strtok(s.address, "\n");
 
-        switch (choice) {
-            case '1':
-                add();
-                break;
-            case '2':
-                list();
-                break;
-            case '3':
-                delete1();
-                break;
-            case '4':
-                search();
-                break;
-            case '5':
-                edit();
-                break;
-            case '6':
-                printf("\nThank you for using our service.\n");
-                exit(0);
-                break;
-            default:
-                printf("\nIncorrect Input. Please try again.\n");
-                break;
-        }
-    }
+    printf("Enter Phone Number: ");
+    fgets(s.phonenumber, 15, stdin);
+    strtok(s.phonenumber, "\n");
+
+    printf("Enter Nationality: ");
+    fgets(s.nationality, 15, stdin);
+    strtok(s.nationality, "\n");
+
+    printf("Enter Email: ");
+    fgets(s.email, 20, stdin);
+    strtok(s.email, "\n");
+
+    printf("Enter Period (days): ");
+    scanf("%9s", s.period);
+
+    printf("Enter Arrival date (dd/mm/yyyy): ");
+    scanf("%9s", s.arrivaldate);
+}
+
+void printCustomerDetails() {
+    printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n",
+           s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
 }
 
 void add() {
@@ -102,29 +104,13 @@ void add() {
 
     while (1) {
         printf("\nEnter Customer Details:\n");
-        printf("Enter Room number: ");
-        scanf("%9s", s.roomnumber);
-        printf("Enter Name: ");
-        scanf("%19s", s.name);
-        printf("Enter Address: ");
-        scanf("%24s", s.address);
-        printf("Enter Phone Number: ");
-        scanf("%14s", s.phonenumber);
-        printf("Enter Nationality: ");
-        scanf("%14s", s.nationality);
-        printf("Enter Email: ");
-        scanf("%19s", s.email);
-        printf("Enter Period (days): ");
-        scanf("%9s", s.period);
-        printf("Enter Arrival date (dd/mm/yyyy): ");
-        scanf("%9s", s.arrivaldate);
-
+        getCustomerDetails();
         fwrite(&s, sizeof(s), 1, f);
         printf("\n1 Room is successfully booked!\n");
 
         printf("\nPress 'q' to quit or any other key to add another customer: ");
         char choice = getchar();
-        getchar();  // To consume the newline
+        clearBuffer();
         if (tolower(choice) == 'q') break;
     }
 
@@ -140,12 +126,12 @@ void list() {
 
     printf("\n%-10s%-20s%-25s%-15s%-15s%-20s%-10s%-12s\n", "Room No.", "Name", "Address", "Phone", "Nationality", "Email", "Period", "Arrival Date");
     for (int i = 0; i < 118; i++) printf("-");
+    printf("\n");
 
     while (fread(&s, sizeof(s), 1, f) == 1) {
-        printf("\n%-10s%-20s%-25s%-15s%-15s%-20s%-10s%-12s", s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
+        printf("%-10s%-20s%-25s%-15s%-15s%-20s%-10s%-12s\n", s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
     }
 
-    printf("\n");
     fclose(f);
 }
 
@@ -197,8 +183,7 @@ void search() {
     while (fread(&s, sizeof(s), 1, f) == 1) {
         if (strcmp(s.roomnumber, roomnumber) == 0) {
             found = 1;
-            printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n", 
-                    s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
+            printCustomerDetails();
             break;
         }
     }
@@ -226,22 +211,7 @@ void edit() {
         if (strcmp(s.roomnumber, roomnumber) == 0) {
             found = 1;
             printf("Enter new details for the customer:\n");
-            printf("Enter Room number: ");
-            scanf("%9s", s.roomnumber);
-            printf("Enter Name: ");
-            scanf("%19s", s.name);
-            printf("Enter Address: ");
-            scanf("%24s", s.address);
-            printf("Enter Phone Number: ");
-            scanf("%14s", s.phonenumber);
-            printf("Enter Nationality: ");
-            scanf("%14s", s.nationality);
-            printf("Enter Email: ");
-            scanf("%19s", s.email);
-            printf("Enter Period (days): ");
-            scanf("%9s", s.period);
-            printf("Enter Arrival date (dd/mm/yyyy): ");
-            scanf("%9s", s.arrivaldate);
+            getCustomerDetails();
 
             fseek(f, -sizeof(s), SEEK_CUR);
             fwrite(&s, sizeof(s), 1, f);
@@ -256,4 +226,46 @@ void edit() {
 
     fclose(f);
 }
-//all function create
+
+int main() {
+    char choice;
+
+    login();
+    while (1) {
+        printf("\n************************** MAIN MENU **************************\n");
+        printf("1 -> Book a room\n");
+        printf("2 -> View Customer Record\n");
+        printf("3 -> Delete Customer Record\n");
+        printf("4 -> Search Customer Record\n");
+        printf("5 -> Edit Record\n");
+        printf("6 -> Exit\n");
+        printf("Enter your choice: ");
+        choice = getchar();
+        clearBuffer();  // Clear the buffer to avoid input issues
+
+        switch (choice) {
+            case '1':
+                add();
+                break;
+            case '2':
+                list();
+                break;
+            case '3':
+                delete1();
+                break;
+            case '4':
+                search();
+                break;
+            case '5':
+                edit();
+                break;
+            case '6':
+                printf("\nThank you for using our service.\n");
+                exit(0);
+                break;
+            default:
+                printf("\nIncorrect Input. Please try again.\n");
+                break;
+        }
+    }
+}
