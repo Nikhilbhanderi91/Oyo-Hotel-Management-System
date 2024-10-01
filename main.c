@@ -241,8 +241,8 @@ int main() {
         printf("6 -> Exit\n");
         printf("Enter your choice: ");
         choice = getchar();
-        clearBuffer();  // Clear the buffer to avoid input issues
-
+        clearBuffer();  
+        
         switch (choice) {
             case '1':
                 add();
