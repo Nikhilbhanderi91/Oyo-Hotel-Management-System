@@ -13,6 +13,7 @@ void login();
 void getCustomerDetails();
 void printCustomerDetails();
 
+
 // Customer structure definition
 struct CustomerDetails {
     char roomnumber[10];
@@ -24,6 +25,7 @@ struct CustomerDetails {
     char period[10];
     char arrivaldate[10];
 } s;
+
 
 void clearBuffer() {
     int c;
@@ -58,6 +60,7 @@ void login() {
     }
 }
 
+
 void getCustomerDetails() {
     printf("\nEnter Room number: ");
     scanf("%9s", s.roomnumber);
@@ -90,10 +93,12 @@ void getCustomerDetails() {
     scanf("%9s", s.arrivaldate);
 }
 
+
 void printCustomerDetails() {
     printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n",
            s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
 }
+
 
 void add() {
     FILE *f = fopen("add.txt", "a+");
@@ -143,6 +148,7 @@ void delete1() {
         return;
     }
 
+ 
     char roomnumber[10];
     printf("Enter the Room Number to delete: ");
     scanf("%9s", roomnumber);
@@ -168,6 +174,7 @@ void delete1() {
     }
 }
 
+
 void search() {
     FILE *f = fopen("add.txt", "r");
     if (f == NULL) {
@@ -175,10 +182,12 @@ void search() {
         return;
     }
 
+    
     char roomnumber[10];
     printf("Enter the Room Number to search: ");
     scanf("%9s", roomnumber);
 
+    
     int found = 0;
     while (fread(&s, sizeof(s), 1, f) == 1) {
         if (strcmp(s.roomnumber, roomnumber) == 0) {
@@ -188,6 +197,7 @@ void search() {
         }
     }
 
+    
     if (!found) {
         printf("\nCustomer record not found.\n");
     }
