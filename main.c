@@ -3,9 +3,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
-
-
 // Function declarations
 void add();
 void list();
@@ -15,9 +12,6 @@ void search();
 void login();
 void getCustomerDetails();
 void printCustomerDetails();
-
-
-
 
 // Customer structure definition
 struct CustomerDetails {
@@ -114,6 +108,7 @@ void add() {
 
     while (1) {
         printf("\nEnter Customer Details:\n");
+
         getCustomerDetails();
         fwrite(&s, sizeof(s), 1, f);
         printf("\n1 Room is successfully booked!\n");
