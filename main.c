@@ -25,7 +25,6 @@ struct CustomerDetails {
     char arrivaldate[10];
 } s;
 
-
 void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
