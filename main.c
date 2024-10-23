@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+
 // Function declarations
 void add();
 void list();
@@ -12,6 +13,7 @@ void search();
 void login();
 void getCustomerDetails();
 void printCustomerDetails();
+
 
 // Customer structure definition
 struct CustomerDetails {
@@ -24,6 +26,7 @@ struct CustomerDetails {
     char period[10];
     char arrivaldate[10];
 } s;
+
 
 void clearBuffer() {
     int c;
@@ -92,6 +95,7 @@ void getCustomerDetails() {
 }
 
 
+
 void printCustomerDetails() {
     printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n",
            s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
@@ -120,6 +124,7 @@ void add() {
 
     fclose(f);
 }
+
 
 void list() {
     FILE *f = fopen("add.txt", "r");
