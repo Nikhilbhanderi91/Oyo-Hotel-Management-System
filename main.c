@@ -15,6 +15,9 @@ void getCustomerDetails();
 void printCustomerDetails();
 
 
+
+
+
 // Customer structure definition
 struct CustomerDetails {
     char roomnumber[10];
