@@ -14,10 +14,6 @@ void login();
 void getCustomerDetails();
 void printCustomerDetails();
 
-
-
-
-
 // Customer structure definition
 struct CustomerDetails {
     char roomnumber[10];
@@ -29,6 +25,13 @@ struct CustomerDetails {
     char period[10];
     char arrivaldate[10];
 } s;
+
+
+
+
+
+
+
 
 
 void clearBuffer() {
