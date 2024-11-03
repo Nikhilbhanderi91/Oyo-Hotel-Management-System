@@ -26,18 +26,13 @@ struct CustomerDetails {
     char arrivaldate[10];
 } s;
 
-
-
-
-
-
-
-
-
 void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
+
+
+
 
 void login() {
     int attempts = 0;
@@ -66,6 +61,10 @@ void login() {
         exit(1);
     }
 }
+
+
+
+
 
 
 void getCustomerDetails() {
@@ -99,6 +98,8 @@ void getCustomerDetails() {
     printf("Enter Arrival date (dd/mm/yyyy): ");
     scanf("%9s", s.arrivaldate);
 }
+
+
 
 
 
