@@ -31,9 +31,6 @@ void clearBuffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-
-
-
 void login() {
     int attempts = 0;
     char uname[10], pword[10];
@@ -61,11 +58,6 @@ void login() {
         exit(1);
     }
 }
-
-
-
-
-
 
 void getCustomerDetails() {
     printf("\nEnter Room number: ");
@@ -98,10 +90,6 @@ void getCustomerDetails() {
     printf("Enter Arrival date (dd/mm/yyyy): ");
     scanf("%9s", s.arrivaldate);
 }
-
-
-
-
 
 void printCustomerDetails() {
     printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n",
