@@ -3,22 +3,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Function declarations
 void add();
 void list();
