@@ -3,7 +3,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
 // Function declarations
 void add();
 void list();
@@ -13,7 +12,6 @@ void search();
 void login();
 void getCustomerDetails();
 void printCustomerDetails();
-
 
 // Customer structure definition
 struct CustomerDetails {
@@ -27,11 +25,13 @@ struct CustomerDetails {
     char arrivaldate[10];
 } s;
 
+// Function to clear the input buffer
 void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+// Function to handle user login
 void login() {
     int attempts = 0;
     char uname[10], pword[10];
@@ -60,6 +60,7 @@ void login() {
     }
 }
 
+// Function to get customer details from user
 void getCustomerDetails() {
     printf("\nEnter Room number: ");
     scanf("%9s", s.roomnumber);
@@ -92,14 +93,15 @@ void getCustomerDetails() {
     scanf("%9s", s.arrivaldate);
 }
 
+// Function to print customer details
 void printCustomerDetails() {
     printf("\nRoom Number: %s\nName: %s\nAddress: %s\nPhone: %s\nNationality: %s\nEmail: %s\nPeriod: %s\nArrival Date: %s\n",
            s.roomnumber, s.name, s.address, s.phonenumber, s.nationality, s.email, s.period, s.arrivaldate);
 }
 
-
+// Function to add a new customer
 void add() {
-    FILE *f = fopen("add.txt", "a+");
+    FILE *f = fopen("add.txt", "a");
     if (f == NULL) {
         printf("Error opening file!\n");
         return;
@@ -121,7 +123,7 @@ void add() {
     fclose(f);
 }
 
-
+// Function to list all customer records
 void list() {
     FILE *f = fopen("add.txt", "r");
     if (f == NULL) {
@@ -140,6 +142,7 @@ void list() {
     fclose(f);
 }
 
+// Function to delete a customer record
 void delete1() {
     FILE *f = fopen("add.txt", "r");
     FILE *temp = fopen("temp.txt", "w");
@@ -148,7 +151,6 @@ void delete1() {
         return;
     }
 
- 
     char roomnumber[10];
     printf("Enter the Room Number to delete: ");
     scanf("%9s", roomnumber);
@@ -174,7 +176,7 @@ void delete1() {
     }
 }
 
-
+// Function to search for a customer by room number
 void search() {
     FILE *f = fopen("add.txt", "r");
     if (f == NULL) {
@@ -182,12 +184,10 @@ void search() {
         return;
     }
 
-    
     char roomnumber[10];
     printf("Enter the Room Number to search: ");
     scanf("%9s", roomnumber);
 
-    
     int found = 0;
     while (fread(&s, sizeof(s), 1, f) == 1) {
         if (strcmp(s.roomnumber, roomnumber) == 0) {
@@ -197,7 +197,6 @@ void search() {
         }
     }
 
-    
     if (!found) {
         printf("\nCustomer record not found.\n");
     }
@@ -205,6 +204,7 @@ void search() {
     fclose(f);
 }
 
+// Function to edit customer details
 void edit() {
     FILE *f = fopen("add.txt", "r+");
     if (f == NULL) {
@@ -237,6 +237,7 @@ void edit() {
     fclose(f);
 }
 
+// Main function
 int main() {
     char choice;
 
