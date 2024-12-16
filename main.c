@@ -3,7 +3,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
 // Function declarations
 void add();
 void list();
@@ -13,7 +12,6 @@ void search();
 void login();
 void getCustomerDetails();
 void printCustomerDetails();
-
 
 // Customer structure definition
 struct CustomerDetails {
@@ -26,7 +24,6 @@ struct CustomerDetails {
     char period[10];
     char arrivaldate[10];
 } s;
-
 // Function to clear the input buffer
 void clearBuffer() {
     int c;
