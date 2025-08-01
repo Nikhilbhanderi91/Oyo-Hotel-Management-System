@@ -13,6 +13,7 @@ void login();
 void getCustomerDetails();
 void printCustomerDetails();
 
+
 // Customer structure definition
 struct CustomerDetails {
     char roomnumber[10];
@@ -29,7 +30,6 @@ void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
-
 
 // Function to handle user login
 void login() {
@@ -141,6 +141,7 @@ void list() {
 
     fclose(f);
 }
+
 
 // Function to delete a customer record
 void delete1() {
