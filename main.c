@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+
 // Function declarations
 void add();
 void list();
@@ -12,7 +13,6 @@ void search();
 void login();
 void getCustomerDetails();
 void printCustomerDetails();
-
 
 // Customer structure definition
 struct CustomerDetails {
